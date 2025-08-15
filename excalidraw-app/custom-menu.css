@@ -1,0 +1,129 @@
+/* Hide specific menu items by text content */
+.dropdown-menu-item-link[href*="github.com"] {
+  display: none !important;
+}
+
+.dropdown-menu-item-link[href*="discord.gg"] {
+  display: none !important;
+}
+
+.dropdown-menu-item-link[href*="x.com"] {
+  display: none !important;
+}
+
+.dropdown-menu-item-link[href*="twitter.com"] {
+  display: none !important;
+}
+
+/* Hide items with specific aria-labels */
+[aria-label="GitHub"] {
+  display: none !important;
+}
+
+[aria-label="Discord"] {
+  display: none !important;
+}
+
+[aria-label="X"] {
+  display: none !important;
+}
+
+/* Hide menu items containing specific text */
+.dropdown-menu-item:contains("Follow us") {
+  display: none !important;
+}
+
+.dropdown-menu-item:contains("Discord Chat") {
+  display: none !important;
+}
+
+.dropdown-menu-item:contains("Sign up") {
+  display: none !important;
+}
+
+.dropdown-menu-item:contains("Visual Debug") {
+  display: none !important;
+}
+
+.dropdown-menu-item:contains("Excalidraw+") {
+  display: none !important;
+}
+
+/* Hide any plus/premium related items */
+[data-testid*="plus"] {
+  display: none !important;
+}
+
+[class*="plus"] {
+  display: none !important;
+}
+
+[class*="premium"] {
+  display: none !important;
+}
+.dropdown-menu-item button:contains("Excalidraw+") {
+  display: none !important;
+}
+
+/* Target the parent container */
+.dropdown-menu-item:has(button:contains("Excalidraw+")) {
+  display: none !important;
+}
+
+/* Alternative selectors */
+[data-testid*="excalidraw-plus"],
+[class*="excalidraw-plus"],
+.excalidraw-plus {
+  display: none !important;
+}
+
+/* Target by exact text match */
+*[text*="Excalidraw+"] {
+  display: none !important;
+}
+
+/* More aggressive approach - hide any element containing the text */
+*:contains("Excalidraw+") {
+  display: none !important;
+}
+
+/* If it's a link */
+a[href*="plus"]:contains("Excalidraw+") {
+  display: none !important;
+}
+
+/* If it has specific styling */
+.upgrade-button,
+.premium-button,
+.plus-button {
+  display: none !important;
+}
+/* Alternative selectors for menu items */
+.dropdown-menu-item-content:contains("GitHub"),
+.dropdown-menu-item-content:contains("Discord"),
+.dropdown-menu-item-content:contains("Follow us"),
+.dropdown-menu-item-content:contains("Sign up"),
+.dropdown-menu-item-content:contains("Visual Debug"),
+.dropdown-menu-item-content:contains("Excalidraw+") {
+  display: none !important;
+}
+
+/* Target the exact Excalidraw+ link */
+a[href*="plus.excalidraw.com"] {
+  display: none !important;
+}
+
+/* More specific targeting */
+a.dropdown-menu-item[href*="plus.excalidraw.com"] {
+  display: none !important;
+}
+
+/* Target by the specific URL pattern */
+a[href*="plus.excalidraw.com/plus?utm_source=excalidraw"] {
+  display: none !important;
+}
+
+/* Alternative: Target by class and href combination */
+.dropdown-menu-item.dropdown-menu-item-base[href*="plus.excalidraw.com"] {
+  display: none !important;
+}

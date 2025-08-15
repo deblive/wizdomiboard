@@ -1,9 +1,407 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+
+
+<title>WizBoard | by Wizdomi.com</title>
+  
+  <script>
+    // Set the desired title
+    const CUSTOM_TITLE = 'WizBoard | by Wizdomi.com';
+    
+    // Function to force our title
+    function setCustomTitle() {
+      if (document.title !== CUSTOM_TITLE) {
+        document.title = CUSTOM_TITLE;
+      }
+    }
+    
+    // Set title immediately
+    document.title = CUSTOM_TITLE;
+    
+    // Override any changes every 500ms
+    setInterval(setCustomTitle, 500);
+    
+    // Also override when page loads and when focus returns
+    document.addEventListener('DOMContentLoaded', setCustomTitle);
+    window.addEventListener('focus', setCustomTitle);
+    
+    // Block any attempts to change document.title
+    let originalTitleSetter = Object.getOwnPropertyDescriptor(Document.prototype, 'title').set;
+    Object.defineProperty(document, 'title', {
+      set: function(newTitle) {
+        if (newTitle !== CUSTOM_TITLE) {
+          console.log('Blocked title change attempt:', newTitle);
+          return; // Block the change
+        }
+        originalTitleSetter.call(this, newTitle);
+      },
+      get: function() {
+        return CUSTOM_TITLE;
+      }
+    });
+  </script>
+  
+  <!-- Your existing CSS -->
+  <style>
+    /* ... your menu hiding CSS ... */
+  </style>
+
+
+
+<script>
+  function addWizdomiSVGLogo() {
+    if (document.querySelector('.wizdomi-top-logo')) return;
+    
+    const logoContainer = document.createElement('a');
+    logoContainer.href = 'https://wizdomi.com';
+    logoContainer.target = '_blank';
+    logoContainer.className = 'wizdomi-top-logo';
+    logoContainer.style.cssText = `
+      position: fixed;
+      top: 15px;
+      left: 65px;        /* Moved right to avoid hamburger */
+      width: 140px;
+      height: 50px;
+      z-index: 9999;
+      display: block;
+      transition: transform 0.2s ease;
+    `;
+    
+    // Try to load actual SVG file first
+    const logoImg = document.createElement('img');
+    logoImg.src = './wizdomi-logo.svg';
+    logoImg.alt = 'Wizdomi';
+    logoImg.style.cssText = `
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    `;
+    
+    // If SVG file fails, use inline SVG as fallback
+    logoImg.onerror = () => {
+      console.log('SVG file not found, using inline SVG');
+      logoContainer.innerHTML = `
+        <svg width="70" height="25" viewBox="0 0 175 62" xmlns="http://www.w3.org/2000/svg">
+          <rect width="175" height="62" fill="#667eea" rx="8"/>
+          <text x="87.5" y="35" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="18" font-weight="bold">WIZDOMI</text>
+        </svg>
+      `;
+    };
+    
+    logoImg.onload = () => {
+      console.log('✅ Actual SVG file loaded successfully!');
+    };
+    
+    logoContainer.appendChild(logoImg);
+    
+    logoContainer.addEventListener('mouseenter', () => {
+      logoContainer.style.transform = 'scale(1.1)';
+    });
+    logoContainer.addEventListener('mouseleave', () => {
+      logoContainer.style.transform = 'scale(1)';
+    });
+    
+    document.body.appendChild(logoContainer);
+    console.log('Added Wizdomi SVG logo beside hamburger');
+  }
+  
+  setTimeout(addWizdomiSVGLogo, 1000);
+</script>
+
+
+<style>
+  /* Your existing CSS */
+
+  /* Hide Library button - Exact targeting */
+  .sidebar-trigger.default-sidebar-trigger,
+  div.sidebar-trigger.default-sidebar-trigger {
+    display: none !important;
+  }
+
+  /* Alternative: Target by the exact path you found */
+  #root > div > div > div.layer-ui__wrapper > div > div > div.layer-ui__wrapper__top-right.zen-mode-transition > label > div {
+    display: none !important;
+  }
+
+  /* Target by sidebar trigger label */
+  .sidebar-trigger__label:contains("Library") {
+    display: none !important;
+  }
+
+  /* Hide parent if it contains Library label */
+  .sidebar-trigger:has(.sidebar-trigger__label:contains("Library")) {
+    display: none !important;
+  }
+</style>
+
+
+<style>
+  /* Your existing CSS */
+
+  /* More specific targeting for Text to diagram */
+  
+  /* Target by the unique SVG paths */
+  button:has(svg path[d*="M15.5 13a3.5 3.5 0 0 0 -3.5 3.5v1"]) {
+    display: none !important;
+  }
+
+  /* Target any dropdown item containing "Text to diagram" text */
+  .dropdown-menu-item-base:has(span:contains("Text to diagram")) {
+    display: none !important;
+  }
+
+  /* Nuclear option: hide any button with AI badge */
+  button:has(.DropDownMenuItemBadge:contains("AI")) {
+    display: none !important;
+  }
+
+  /* Target the exact button structure */
+  button.dropdown-menu-item.dropdown-menu-item-base:has(span:contains("Text to diagram")) {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+  }
+</style>
+
+
+
+<style>
+  /* Your existing CSS */
+
+  /* Hide initial Excalidraw logo and loading screen */
+  .excalidraw-logo,
+  .ExcalidrawLogo,
+  .loading-scene,
+  .loading-message,
+  .app-logo,
+  .splash-screen {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+
+  /* Hide any SVG logos during loading */
+  svg.ExcalidrawLogo-icon,
+  .ExcalidrawLogo svg {
+    display: none !important;
+  }
+
+  /* Hide loading overlay */
+  .excalidraw-loading-overlay,
+  .loading-overlay {
+    display: none !important;
+  }
+
+  /* Hide any element with Excalidraw in class name during loading */
+  [class*="Excalidraw"]:not(.excalidraw-wrapper):not(.excalidraw-container) {
+    opacity: 0 !important;
+  }
+
+  /* Target the specific loading logo structure */
+  .Island > .ExcalidrawLogo,
+  .layer-ui__wrapper > .ExcalidrawLogo {
+    display: none !important;
+  }
+
+  /* Hide welcome screen if it exists */
+  .welcome-screen,
+  .app-welcome,
+  [data-testid*="welcome"] {
+    display: none !important;
+  }
+
+  /* Custom loading screen - replace Excalidraw's */
+  .custom-loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    color: #667eea;
+    z-index: 10000;
+  }
+</style>
+
+
+
+
+
+<style>
+  /* Your existing CSS */
+
+  /* Hide More Tools dropdown items */
+  
+  /* Hide "Generate" section header */
+  div[style*="margin: 6px 0px; font-size: 14px; font-weight: 600;"]:contains("Generate") {
+    display: none !important;
+  }
+
+  /* Hide specific toolbar items by data-testid */
+  button[data-testid="toolbar-embeddable"],
+  button[data-testid="toolbar-magicframe"] {
+    display: none !important;
+  }
+
+  /* Hide "Text to diagram" button (no data-testid, so target by content) */
+  .dropdown-menu-item:has(.dropdown-menu-item__text:contains("Text to diagram")) {
+    display: none !important;
+  }
+
+  /* Hide any items with AI badges */
+  .dropdown-menu-item:has(.DropDownMenuItemBadge:contains("AI")) {
+    display: none !important;
+  }
+
+  /* Hide "Mermaid to Excalidraw" by text content */
+  .dropdown-menu-item:has(.dropdown-menu-item__text:contains("Mermaid to Excalidraw")) {
+    display: none !important;
+  }
+
+  /* Hide "Wireframe to code" by text content */
+  .dropdown-menu-item:has(.dropdown-menu-item__text:contains("Wireframe to code")) {
+    display: none !important;
+  }
+</style>
+
+
+
+
+
+     <style>
+    /* Hide social media links */
+    .dropdown-menu-item-link[href*="github.com"],
+    .dropdown-menu-item-link[href*="discord.gg"],
+    .dropdown-menu-item-link[href*="x.com"],
+    [aria-label="GitHub"],
+    [aria-label="Discord"],
+    [aria-label="X"] {
+      display: none !important;
+    }
+
+    /* Hide Excalidraw+ - the exact target */
+    a[href*="plus.excalidraw.com"] {
+      display: none !important;
+    }
+
+    /* Backup selectors for Excalidraw+ */
+    a.dropdown-menu-item[href*="plus.excalidraw.com"],
+    .dropdown-menu-item.dropdown-menu-item-base[href*="plus.excalidraw.com"],
+    a[href*="plus.excalidraw.com/plus?utm_source=excalidraw"] {
+      display: none !important;
+    }
+
+    /* Nuclear option - hide by multiple methods */
+    a[href*="plus.excalidraw.com"],
+    a[href*="plus.excalidraw.com"] * {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      height: 0 !important;
+      width: 0 !important;
+    }
+  </style>
+
+
+<style>
+  /* Your existing CSS */
+
+  /* Hide the Excalidraw+ save card - Multiple targeting methods */
+  
+  /* Method 1: Target by the exact path you found */
+  body > div.excalidraw.excalidraw-modal-container > div > div.Modal__content > div > div > div > div > div:nth-child(3) {
+    display: none !important;
+  }
+
+  /* Method 2: Target by Card class containing Excalidraw+ */
+  .Card:has(h2:contains("Excalidraw+")) {
+    display: none !important;
+  }
+
+  /* Method 3: Target by Card details text */
+  .Card:has(.Card-details:contains("Excalidraw+ workspace")) {
+    display: none !important;
+  }
+
+  /* Method 4: More specific targeting */
+  .Card h2:contains("Excalidraw+") {
+    display: none !important;
+  }
+
+  .Card:has(.ExcalidrawLogo):has(h2:contains("Excalidraw+")) {
+    display: none !important;
+  }
+
+  /* Method 5: Target the entire card container */
+  .Card:has([title="Export"]):has(h2:contains("Excalidraw+")) {
+    display: none !important;
+  }
+</style>
+
+
+<style>
+  /* Your existing menu hiding CSS */
+  .dropdown-menu-item-link[href*="github.com"],
+  .dropdown-menu-item-link[href*="discord.gg"],
+  .dropdown-menu-item-link[href*="x.com"],
+  [aria-label="GitHub"],
+  [aria-label="Discord"],
+  [aria-label="X"] {
+    display: none !important;
+  }
+
+  a[href*="plus.excalidraw.com"] {
+    display: none !important;
+  }
+
+  /* NEW: Hide Help panel items */
+  /* Documentation link */
+  a[href*="docs.excalidraw.com"],
+  a[href*="documentation"],
+  .dropdown-menu-item-link[href*="docs"] {
+    display: none !important;
+  }
+
+  /* GitHub issues link */
+  a[href*="github.com/excalidraw/excalidraw/issues"],
+  a[href*="issues"],
+  .dropdown-menu-item-link[href*="github"][href*="issues"] {
+    display: none !important;
+  }
+
+  /* YouTube link */
+  a[href*="youtube.com"],
+  a[href*="youtu.be"],
+  .dropdown-menu-item-link[href*="youtube"] {
+    display: none !important;
+  }
+
+  /* Alternative targeting by text content */
+  .dropdown-menu-item:has-text("Documentation"),
+  .dropdown-menu-item:has-text("Found an Issue"),
+  .dropdown-menu-item:has-text("Submit"),
+  .dropdown-menu-item:has-text("Youtube") {
+    display: none !important;
+  }
+</style>
+
+
+
+
+
+
+
+
     <meta charset="utf-8" />
     <title>
-      Free, collaborative whiteboard • Hand-drawn look & feel | Excalidraw
+      WizBoard | by Wizdomi.com
     </title>
     <meta
       name="viewport"
@@ -16,26 +414,26 @@
     <!-- Primary Meta Tags -->
     <meta
       name="title"
-      content="Free, collaborative whiteboard • Hand-drawn look & feel | Excalidraw"
+      content="Live Collaborative whiteboard by Wizdomi.com | WizBoard"
     />
     <meta
       name="description"
-      content="Excalidraw is a virtual collaborative whiteboard tool that lets you easily sketch diagrams that have a hand-drawn feel to them."
+      content="WizBoard is a virtual collaborative whiteboard tool that lets you easily sketch diagrams that have a hand-drawn feel to them."
     />
     <meta name="image" content="https://excalidraw.com/og-image-3.png" />
 
     <!-- Open Graph / Facebook -->
-    <meta property="og:site_name" content="Excalidraw" />
+    <meta property="og:site_name" content="WizBoard" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://excalidraw.com" />
+    <meta property="og:url" content="https://wizdomi.com" />
     <meta
       property="og:title"
-      content="Excalidraw — Collaborative whiteboarding made easy"
+      content="WizBoard — Collaborative whiteboarding made easy"
     />
-    <meta property="og:image:alt" content="Excalidraw logo" />
+    <meta property="og:image:alt" content="Wizboard logo" />
     <meta
       property="og:description"
-      content="Excalidraw is a virtual collaborative whiteboard tool that lets you easily sketch diagrams that have a hand-drawn feel to them."
+      content="WizBoard is a virtual collaborative whiteboard tool that lets you easily sketch diagrams that have a hand-drawn feel to them."
     />
     <meta property="og:image" content="https://excalidraw.com/og-image-3.png" />
 
@@ -45,18 +443,18 @@
     <meta property="twitter:url" content="https://excalidraw.com" />
     <meta
       property="twitter:title"
-      content="Excalidraw — Collaborative whiteboarding made easy"
+      content="WizBoard — Collaborative whiteboarding made easy"
     />
     <meta
       property="twitter:description"
-      content="Excalidraw is a virtual collaborative whiteboard tool that lets you easily sketch diagrams that have a hand-drawn feel to them."
+      content="WizBoard is a virtual collaborative whiteboard tool that lets you easily sketch diagrams that have a hand-drawn feel to them."
     />
     <meta
       property="twitter:image"
       content="https://excalidraw.com/og-image-3.png"
     />
 
-    <link rel="canonical" href="https://excalidraw.com" />
+    <link rel="canonical" href="https://wizdomi.com" />
 
     <!------------------------------------------------------------------------->
     <!--   to minimize white flash on load when user has dark mode enabled   -->
@@ -161,7 +559,7 @@
     <% } %>
     <script>
       // setting this so that libraries installation reuses this window tab.
-      window.name = "_excalidraw";
+      window.name = "_wizboard";
     </script>
 
     <!-- FIXME: remove this when we update CRA (fix SW caching) -->
@@ -250,5 +648,57 @@
     </script>
     <!-- end LEGACY GOOGLE ANALYTICS -->
     <% } %>
+
+<script>
+  // Override all Sign up button functionality
+  function overrideSignupButtons() {
+    // Find all links and buttons
+    const allElements = document.querySelectorAll('a, button');
+    
+    allElements.forEach(element => {
+      const text = element.textContent || '';
+      const href = element.getAttribute('href') || '';
+      
+      // Check if it's a signup button/link
+      if (text.toLowerCase().includes('sign up') || 
+          text.toLowerCase().includes('signup') ||
+          href.includes('signup') ||
+          href.includes('auth')) {
+        
+        // Remove existing event listeners
+        element.onclick = null;
+        element.removeAttribute('href');
+        
+        // Add your custom click handler
+        element.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          // Replace with your custom URL
+          window.open('https://wizdomi.com/book-a-free-trial-class/', '_blank');
+        });
+        
+        // Update the href for good measure
+        if (element.tagName === 'A') {
+          element.href = 'https://wizdomi.com/book-a-free-trial-class/';
+        }
+      }
+    });
+  }
+  
+  // Run when page loads
+  document.addEventListener('DOMContentLoaded', overrideSignupButtons);
+  
+  // Run again after a delay (for dynamic content)
+  setTimeout(overrideSignupButtons, 2000);
+  
+  // Run when user clicks anywhere (to catch dynamic buttons)
+  document.addEventListener('click', function() {
+    setTimeout(overrideSignupButtons, 100);
+  });
+</script>
+
+
+
   </body>
 </html>
